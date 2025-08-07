@@ -1,0 +1,12 @@
+---
+description: Create a solid test suite for each feature
+globs: spec/**/*.rb
+---
+
+# Docs
+- Use documentation for RSpec 3.13
+- Use documentation for FactoryBot 6.5
+
+# Config
+- Factories goes in spec/factories
+- Suite config are in [spec_helper.rb](mdc:spec/spec_helper.rb), [rails_helper.rb](mdc:spec/rails_helper.rb)
