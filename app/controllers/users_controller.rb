@@ -1,5 +1,13 @@
+# frozen_string_literal: true
+
+# Controller actions for users
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    flash[:error] = "User not found"
+    redirect_to users_path
+  end
 
   # GET /users or /users.json
   def index
