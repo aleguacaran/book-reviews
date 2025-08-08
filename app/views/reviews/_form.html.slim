@@ -1,0 +1,25 @@
+= form_with(model: [@book, @review], local: true) do |form|
+  - if @review.errors.any?
+    #error_explanation style="color: red;"
+      h2 = pluralize(@review.errors.count, "error") + " prohibited this review from being saved:"
+      ul
+        - @review.errors.each do |error|
+          li = error.full_message
+
+  .field
+    = form.label :user_id, "User", style: "display: block"
+    = form.collection_select :user_id, @users, :id, :name, { prompt: "Select a user" }, { required: true }
+
+  .field
+    = form.label :rating, "Rating (1-5)", style: "display: block"
+    = form.number_field :rating, in: 1..5, step: 1, required: true
+    small Rate from 1 (very bad) to 5 (excellent)
+
+  .field
+    = form.label :comment, "Comment", style: "display: block"
+    = form.text_area :comment, rows: 5, maxlength: 1000, required: true
+    small Maximum 1000 characters
+
+  .actions
+    = form.submit "Create Review", class: "btn btn-primary"
+    = link_to "Cancel", @book, class: "btn btn-secondary"
