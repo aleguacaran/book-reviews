@@ -2,5 +2,5 @@
   <h2><%= book.title %></h2>
   <p><strong>Autor:</strong> <%= book.author %></p>
   <p><strong>Published at:</strong> <%= book.published_at.strftime('%d/%m/%Y') if book.published_at %></p>
-  <p><strong>Rating:</strong> <%= book.rating %></p>
+  <p><strong>Rating:</strong> <%= book.displayed_rating %></p>
 </div>

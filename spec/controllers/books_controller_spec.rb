@@ -17,7 +17,10 @@ RSpec.describe BooksController, type: :controller do
   end
 
   describe '#index' do
-    before { get :index }
+    before do
+      create_list(:book, 3)
+      get :index
+    end
 
     it 'returns a ok http status' do
       expect(response).to have_http_status(:ok)
@@ -28,8 +31,6 @@ RSpec.describe BooksController, type: :controller do
     end
 
     it 'renders all existing books' do
-      create_list(:book, 3)
-      get :index
       expect(response.body).to include(*Book.all.map(&:title))
     end
   end
@@ -185,7 +186,7 @@ RSpec.describe BooksController, type: :controller do
       end
 
       it 'renders the received book and it details' do
-        expect(response.body).to include(book.title, book.author, book.rating)
+        expect(response.body).to include(book.title, book.author, book.displayed_rating)
       end
     end
 

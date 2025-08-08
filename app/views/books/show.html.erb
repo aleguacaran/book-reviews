@@ -2,7 +2,25 @@
 
 <%= render @book %>
 
-<div>
+<div class="reviews-section">
+  <h3>Reviews (<%= @book.reviews.count %>)</h3>
+
+  <% if @book.reviews.any? %>
+    <div class="reviews-list">
+      <% @book.reviews.includes(:user).each do |review| %>
+        <%= render 'reviews/review', review: review %>
+      <% end %>
+    </div>
+  <% else %>
+    <p><em>No hay reviews aún. ¡Sé el primero en agregar una!</em></p>
+  <% end %>
+
+  <div class="add-review">
+    <%= link_to "Agregar Review", new_book_review_path(@book), class: "btn btn-primary" %>
+  </div>
+</div>
+
+<div class="book-actions">
   <%= link_to "Edit this book", edit_book_path(@book) %> |
   <%= link_to "Back to books", books_path %>
 
