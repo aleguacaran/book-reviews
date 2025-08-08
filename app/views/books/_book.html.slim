@@ -1,0 +1,11 @@
+##{dom_id book}
+  h2 = book.title
+  p
+    strong Autor:
+    = book.author
+  p
+    strong Published at:
+    = book.published_at.strftime('%d/%m/%Y') if book.published_at
+  p
+    strong Rating:
+    = book.displayed_rating
