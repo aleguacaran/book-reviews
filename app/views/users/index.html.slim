@@ -1,11 +1,40 @@
-p style="color: green" = notice
+- content_for :title, "Users"
 
-h1 Users
+.d-flex.justify-content-between.align-items-center.mb-4
+  h1.mb-0 Users
+  = link_to "New User", new_user_path, class: "btn btn-primary"
 
-#users
-  - @users.each do |user|
-    == render user
-    p
-      = link_to "Show this user", user
+- if @users.any?
+  .table-responsive
+    table.table.table-striped.table-hover
+      thead.table-dark
+        tr
+          th scope="col" Name
+          th scope="col" Status
+          th scope="col" Actions
+      tbody
+        - active_users = @users.select(&:active?)
+        - banned_users = @users.select(&:banned?)
 
-= link_to "New user", new_user_path
+        - active_users.each do |user|
+          tr
+            td = user.name
+            td
+              span.badge.bg-success Active
+            td
+              = link_to "View", user, class: "btn btn-outline-primary btn-sm me-2"
+              = link_to "Edit", edit_user_path(user), class: "btn btn-outline-secondary btn-sm"
+
+        - banned_users.each do |user|
+          tr.text-muted style="opacity: 0.7;"
+            td = user.name
+            td
+              span.badge.bg-danger Banned
+            td
+              = link_to "View", user, class: "btn btn-outline-secondary btn-sm me-2"
+              = link_to "Edit", edit_user_path(user), class: "btn btn-outline-secondary btn-sm"
+- else
+  .alert.alert-info.text-center
+    h4 No registered users
+    p Start adding your first user
+    = link_to "Add User", new_user_path, class: "btn btn-primary"
