@@ -1,6 +1,11 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    flash[:error] = "Book not found"
+    redirect_to books_path
+  end
+
   # GET /books or /books.json
   def index
     @books = Book.all
