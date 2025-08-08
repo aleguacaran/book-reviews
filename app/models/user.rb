@@ -4,5 +4,5 @@
 class User < ApplicationRecord
   validates :name, :status, presence: true
 
-  enum status: { active: :active, banned: :banned }, default: :active
+  enum :status, { active: 'active', banned: 'banned' }, default: :active
 end
