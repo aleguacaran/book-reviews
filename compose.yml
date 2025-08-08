@@ -12,7 +12,7 @@ services:
     volumes:
       - .:/var/www
       - bundle_cache:/bundle
-      # - node_modules_cache:/var/www/node_modules
+      - node_modules_cache:/var/www/node_modules
     ports:
       - 3000:3000
     depends_on:
@@ -30,5 +30,5 @@ services:
 
 volumes:
   bundle_cache:
-  # node_modules_cache:
+  node_modules_cache:
   postgresql_cache:

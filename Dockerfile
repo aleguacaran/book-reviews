@@ -2,12 +2,11 @@ FROM ruby:3.4.5-slim AS base
 
 RUN apt update
 RUN apt upgrade -y
-RUN apt install -y build-essential libpq-dev libyaml-dev
-# RUN apt install -y build-essential libpq-dev rustc libssl-dev libyaml-dev zlib1g-dev libgmp-dev curl
+RUN apt install -y build-essential libpq-dev libyaml-dev curl
 
-# RUN curl -fsSL https://deb.nodesource.com/setup_23.x | bash -
-# RUN apt install -y nodejs
-# RUN npm install -g npm yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_23.x | bash -
+RUN apt install -y nodejs
+RUN npm install -g npm yarn
 
 ENV DIR=/var/www
 
