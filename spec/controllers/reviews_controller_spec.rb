@@ -35,7 +35,8 @@ RSpec.describe ReviewsController, type: :controller do
     it { is_expected.to render_template(:new) }
 
     it 'renders a form to create a new review' do
-      expect(response.body).to include('form', 'New review', 'Create Review', book.title)
+      expect(response.body).to include('form', 'New review', 'Create Review',
+                                       CGI.escapeHTML(book.title))
     end
 
     it_behaves_like 'renders users to select'
