@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ReviewsController, type: :controller do
+RSpec.describe ReviewsController do
   let(:book) { create(:book) }
 
   shared_examples 'renders users to select' do
@@ -106,7 +106,7 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     context 'when the review does not exist' do
-      before { get :edit, params: { book_id: book.id, id: 99999 } }
+      before { get :edit, params: { book_id: book.id, id: 9999 } }
 
       it_behaves_like 'review not found'
     end
@@ -159,7 +159,10 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     context 'when the review does not exist' do
-      before { patch :update, params: { book_id: book.id, id: 99999, review: { rating: 5, comment: 'Updated comment' } } }
+      before do
+        data = { book_id: book.id, id: 9999, review: { rating: 5, comment: 'Updated comment' } }
+        patch :update, params: data
+      end
 
       it_behaves_like 'review not found'
     end
@@ -192,7 +195,7 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     context 'when the review does not exist' do
-      before { delete :destroy, params: { book_id: book.id, id: 99999 } }
+      before { delete :destroy, params: { book_id: book.id, id: 9999 } }
 
       it_behaves_like 'review not found'
     end

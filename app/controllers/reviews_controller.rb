@@ -5,8 +5,8 @@ class ReviewsController < ApplicationController
   before_action :set_book
   before_action :set_review, only: %i[edit update destroy]
 
-  rescue_from ActiveRecord::RecordNotFound do |exception|
-    flash[:error] = "Review not found"
+  rescue_from ActiveRecord::RecordNotFound do |_exception|
+    flash[:error] = 'Review not found'
     redirect_to @book
   end
 
@@ -27,13 +27,10 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.save
-        format.html { redirect_to @book, notice: "Review was successfully created." }
+        format.html { redirect_to @book, notice: 'Review was successfully created.' }
         format.json { render json: @review, status: :created }
       else
-        format.html do
-          @users = User.active
-          render :new, status: :unprocessable_entity
-        end
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
     end
@@ -43,13 +40,10 @@ class ReviewsController < ApplicationController
   def update
     respond_to do |format|
       if @review.update(review_params)
-        format.html { redirect_to @book, notice: "Review was successfully updated." }
+        format.html { redirect_to @book, notice: 'Review was successfully updated.' }
         format.json { render json: @review, status: :ok }
       else
-        format.html do
-          @users = User.active
-          render :edit, status: :unprocessable_entity
-        end
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
     end
@@ -60,7 +54,7 @@ class ReviewsController < ApplicationController
     @review.destroy!
 
     respond_to do |format|
-      format.html { redirect_to @book, status: :see_other, notice: "Review was successfully deleted." }
+      format.html { redirect_to @book, status: :see_other, notice: 'Review was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -76,6 +70,6 @@ class ReviewsController < ApplicationController
   end
 
   def review_params
-    params.require(:review).permit(:user_id, :rating, :comment)
+    params.expect(review: %i[user_id rating comment])
   end
 end

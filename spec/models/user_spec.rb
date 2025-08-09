@@ -10,8 +10,9 @@ RSpec.describe User do
     it { is_expected.to validate_presence_of(:status) }
 
     it {
-      is_expected.to define_enum_for(:status).with_values(active: 'active', banned: 'banned')
-                                             .with_default(:active).backed_by_column_of_type(:string)
+      is_expected.to define_enum_for(:status)
+        .with_values(active: 'active', banned: 'banned').with_default(:active)
+        .backed_by_column_of_type(:string)
     }
 
     it 'has a valid factory' do
