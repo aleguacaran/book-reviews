@@ -31,8 +31,8 @@
       .card-body
         - if @book.reviews.any?
           / Separate active and banned user reviews
-          - active_reviews = @book.reviews.includes(:user).joins(:user).where(users: { status: :active })
-          - banned_reviews = @book.reviews.includes(:user).joins(:user).where(users: { status: :banned })
+          - active_reviews = @book.reviews.includes(:user)
+          - banned_reviews = @book.reviews.unscoped.includes(:user).from_banned_users
 
           .accordion id="reviewsAccordion"
             / Active user reviews first

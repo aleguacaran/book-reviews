@@ -31,7 +31,8 @@ RSpec.describe BooksController, type: :controller do
     end
 
     it 'renders all existing books' do
-      expect(response.body).to include(*Book.all.map(&:title))
+      titles = Book.all.map { |book| CGI.escapeHTML(book.title) }
+      expect(response.body).to include(*titles)
     end
   end
 
