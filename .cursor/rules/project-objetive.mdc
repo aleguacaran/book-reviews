@@ -1,0 +1,21 @@
+---
+alwaysApply: true
+description: Sistema de calificación de Reseñas de Libros.
+---
+
+Using Test-Driven Development (TDD), implement a book review rating system with the following requirements:
+
+## Requirements:
+- A book review must have a rating of 1 to 5 stars
+- Reviews can contain text
+- The system must calculate the average rating for a book
+- The average rating is expressed to the nearest tenth (rounding is required)
+- Books with fewer than 3 reviews must be marked as "Insufficient Reviews"
+- Reviews from banned users must not count toward the average
+- A review cannot have more than 1000 characters
+
+## Instructions:
+1. Use RSpec to write the tests first
+2. Implement the minimum code necessary for the tests to pass
+3. Refactor while keeping the tests in the green
+4. Follow Ruby/Rails best practices
