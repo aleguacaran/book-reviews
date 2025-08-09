@@ -6,18 +6,19 @@ class Book < ApplicationRecord
 
   has_many :reviews, -> { from_active_users }, dependent: :destroy
 
-  def rating
-    return 'Insufficient reviews' if reviews.count < 3
-
-    avg_rating
+  def displayed_rating
+    rating.nil? ? 'Insufficient reviews' : rating
   end
 
-  private
+  def update_rating!
+    # NOTE: Reload is needed in case of multiple reviews in same request (only in tests)
+    valid_reviews = reviews.reload.pluck(:rating)
 
-  def avg_rating
-    valid_reviews = reviews.pluck(:rating)
-    sum = valid_reviews.sum
-    count = valid_reviews.count
-    (sum.to_f / count).round(1)
+    if valid_reviews.count < 3
+      update_column(:rating, nil)
+    else
+      avg_rating = (valid_reviews.sum.to_f / valid_reviews.count).round(1)
+      update_column(:rating, avg_rating)
+    end
   end
 end

@@ -58,6 +58,13 @@ RSpec.describe ReviewsController, type: :controller do
       it { is_expected.to redirect_to(book) }
       it { is_expected.to respond_with(:redirect) }
       it { is_expected.to set_flash[:notice].to('Review was successfully created.') }
+
+      it 'updates the book rating' do
+        book.reviews.destroy_all
+        create_list(:review, 2, book: book, rating: 4)
+        post :create, params: valid_params
+        expect { book.reload }.to change(book, :rating).from(nil).to(4.0)
+      end
     end
 
     context 'with invalid params' do
@@ -119,6 +126,13 @@ RSpec.describe ReviewsController, type: :controller do
         review.reload
         expect(review).to have_attributes(new_attrs)
       end
+
+      it 'updates the book rating' do
+        book.reviews.destroy_all
+        reviews = create_list(:review, 3, book: book, rating: 4)
+        patch :update, params: { book_id: book.id, id: reviews.last.id, review: new_attrs }
+        expect { book.reload }.to change(book, :rating).from(4.0).to(4.3)
+      end
     end
 
     context 'with invalid params' do
@@ -151,14 +165,14 @@ RSpec.describe ReviewsController, type: :controller do
 
   describe '#destroy' do
     context 'when the review exists' do
+      define_method(:review) { Review.last }
+
       before do
         create_list(:review, 3, book: book)
-        review = Review.last
         delete :destroy, params: { book_id: book.id, id: review.id }
       end
 
       it 'destroys the review' do
-        review = Review.last
         expect { delete :destroy, params: { book_id: book.id, id: review.id } }
           .to change(Review, :count).by(-1)
       end
@@ -166,6 +180,13 @@ RSpec.describe ReviewsController, type: :controller do
       it { is_expected.to redirect_to(book) }
       it { is_expected.to respond_with(:redirect) }
       it { is_expected.to set_flash[:notice].to('Review was successfully deleted.') }
+
+      it 'updates the book rating' do
+        book.reviews.destroy_all
+        create_list(:review, 3, book: book, rating: 4)
+        delete :destroy, params: { book_id: book.id, id: review.id }
+        expect { book.reload }.to change(book, :rating).from(4.0).to(nil)
+      end
     end
 
     context 'when the review does not exist' do
