@@ -5,7 +5,6 @@
     .card
       .card-header.bg-warning.text-dark
         h1.mb-0.fs-3
-          | Editing:
-          em = @user.name
+          | Editing: #{@user.name}
       .card-body
-        = render "form", user: @user
+        = render 'form', user: @user

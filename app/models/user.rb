@@ -16,6 +16,6 @@ class User < ApplicationRecord
     return if previous_changes['status'].blank? || reviews.blank?
 
     book_ids = reviews.pluck(:book_id)
-    Book.where(id: book_ids).each(&:update_rating!)
+    Book.where(id: book_ids).find_each(&:update_rating!)
   end
 end
