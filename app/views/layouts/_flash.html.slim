@@ -1,15 +1,18 @@
 - flash.each do |key, message|
-  - alert_class = case key
-  - when 'notice'
-    - 'alert-info'
-  - when 'success'
-    - 'alert-success'
-  - when 'alert'
-    - 'alert-warning'
-  - when 'error'
-    - 'alert-danger'
-  - else
-    - 'alert-secondary'
+  ruby:
+    alert_class = case key
+                  when 'notice'
+                    'alert-info'
+                  when 'success'
+                    'alert-success'
+                  when 'alert'
+                    'alert-warning'
+                  when 'error'
+                    'alert-danger'
+                  else
+                    'alert-secondary'
+                  end
+
   .alert class=alert_class role="alert"
     = message
     button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"
