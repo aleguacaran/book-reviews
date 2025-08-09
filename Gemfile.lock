@@ -356,6 +356,17 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
+    slim (5.2.1)
+      temple (~> 0.10.0)
+      tilt (>= 2.1.0)
+    slim-rails (3.7.0)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      slim (>= 3.0, < 6.0, != 5.0.0)
+    slim_lint (0.33.0)
+      rexml (~> 3.2)
+      rubocop (>= 1.0, < 2.0)
+      slim (>= 3.0, < 6.0)
     solid_cable (3.0.11)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -382,10 +393,12 @@ GEM
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.7)
+    temple (0.10.4)
     thor (1.4.0)
     thruster (0.1.15)
     thruster (0.1.15-aarch64-linux)
     thruster (0.1.15-x86_64-linux)
+    tilt (2.6.1)
     timeout (0.4.3)
     turbo-rails (2.0.16)
       actionpack (>= 7.1.0)
@@ -444,6 +457,8 @@ DEPENDENCIES
   rubocop-rails-omakase
   selenium-webdriver
   shoulda-matchers
+  slim-rails
+  slim_lint
   solid_cable
   solid_cache
   solid_queue

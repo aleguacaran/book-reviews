@@ -14,6 +14,7 @@ Using Test-Driven Development (TDD), implement a book review rating system with 
 - Books with fewer than 3 reviews must be marked as "Insufficient Reviews"
 - Reviews from banned users must not count toward the average
 - A review cannot have more than 1000 characters
+- All code must be generated in English
 
 ## Instructions:
 1. Use RSpec to write the tests first

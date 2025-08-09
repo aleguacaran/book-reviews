@@ -1,0 +1,14 @@
+linters:
+  LineLength:
+    max: 120
+  Indentation:
+    character: space
+    width: 2
+  TrailingWhitespace:
+    enabled: true
+  EmptyLines:
+    max: 2
+  FinalNewline:
+    enabled: true
+  RuboCop:
+    enabled: true
