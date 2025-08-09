@@ -4,22 +4,20 @@
 class Book < ApplicationRecord
   validates :title, :author, :published_at, presence: true
 
-  attribute :reviews, :integer, array: true, default: []
+  has_many :reviews, -> { from_active_users }, dependent: :destroy
 
   def rating
-    avg = average_rating_from_valid_reviews
-    return 'Insufficient reviews' if avg.nil?
+    return 'Insufficient reviews' if reviews.count < 3
 
-    avg
+    avg_rating
   end
 
   private
 
-  def average_rating_from_valid_reviews
-    return nil if reviews.count < 3
-
-    sum = reviews.sum
-    count = reviews.count
+  def avg_rating
+    valid_reviews = reviews.pluck(:rating)
+    sum = valid_reviews.sum
+    count = valid_reviews.count
     (sum.to_f / count).round(1)
   end
 end
