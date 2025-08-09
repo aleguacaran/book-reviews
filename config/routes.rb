@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  resources :users
+  resources :users, except: :show
   resources :books do
-    resources :reviews, except: [:index, :show]
+    resources :reviews, except: %i[index show]
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

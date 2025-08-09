@@ -22,7 +22,6 @@
             td
               span.badge.bg-success Active
             td
-              = link_to "View", user, class: "btn btn-outline-primary btn-sm me-2"
               = link_to "Edit", edit_user_path(user), class: "btn btn-outline-secondary btn-sm"
 
         - banned_users.each do |user|
@@ -31,7 +30,6 @@
             td
               span.badge.bg-danger Banned
             td
-              = link_to "View", user, class: "btn btn-outline-secondary btn-sm me-2"
               = link_to "Edit", edit_user_path(user), class: "btn btn-outline-secondary btn-sm"
 - else
   .alert.alert-info.text-center

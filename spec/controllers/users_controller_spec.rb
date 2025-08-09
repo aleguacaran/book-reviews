@@ -46,7 +46,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it 'renders a form to create a new user' do
-      expect(response.body).to include('form', 'New user', 'Create User')
+      expect(response.body).to include('form', 'New User', 'Create User')
     end
   end
 
@@ -56,8 +56,8 @@ RSpec.describe UsersController, type: :controller do
 
       before { post :create, params: valid_params }
 
-      it 'redirects to the show page' do
-        expect(response).to redirect_to(user_path(User.last))
+      it 'redirects to the users index page' do
+        expect(response).to redirect_to(users_path)
       end
 
       it 'sets a flash notice message' do
@@ -111,7 +111,8 @@ RSpec.describe UsersController, type: :controller do
       end
 
       it 'renders a form to edit the user' do
-        expect(response.body).to include('form', 'Editing user', 'Update User')
+        expect(response.body).to include('form', CGI.escapeHTML("Editing #{user.name}"),
+                                         'Update User')
       end
     end
 
@@ -132,8 +133,8 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to have_http_status(:redirect)
       end
 
-      it 'redirects to the show page' do
-        expect(response).to redirect_to(user_path(user))
+      it 'redirects to the users index page' do
+        expect(response).to redirect_to(users_path)
       end
 
       it 'sets a flash notice message' do
@@ -167,32 +168,6 @@ RSpec.describe UsersController, type: :controller do
       it 'renders the user errors' do
         expect(response.body).to include(CGI.escapeHTML("Name can't be blank"))
       end
-    end
-  end
-
-  describe '#show' do
-    context 'when the user exists' do
-      let(:user) { create(:user) }
-
-      before { get :show, params: { id: user.id } }
-
-      it 'returns a ok http status' do
-        expect(response).to have_http_status(:ok)
-      end
-
-      it 'renders the show template' do
-        expect(response).to render_template(:show)
-      end
-
-      it 'renders the received user and its details' do
-        expect(response.body).to include(user.name, user.status)
-      end
-    end
-
-    context 'when the user does not exist' do
-      before { get :show, params: { id: 0 } }
-
-      it_behaves_like 'user not found'
     end
   end
 
