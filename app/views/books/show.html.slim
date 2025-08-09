@@ -14,7 +14,7 @@
               = @book.author
             p.mb-2
               strong Published:
-              = @book.published_at&.strftime('%B %Y')
+              = @book.published_at.strftime('%B %Y')
           .col-md-6
             p.mb-2
               strong Rating:
@@ -26,7 +26,7 @@
       .card-header.d-flex.justify-content-between.align-items-center
         h4.mb-0
           | Reviews (#{@book.reviews.count})
-        = link_to "Add Review", new_book_review_path(@book), class: "btn btn-primary btn-sm"
+        = link_to 'Add Review', new_book_review_path(@book), class: 'btn btn-primary btn-sm'
 
       .card-body
         - if @book.reviews.any?
@@ -37,11 +37,13 @@
           .accordion id="reviewsAccordion"
             / Active user reviews first
             - active_reviews.each_with_index do |review, index|
-              = render 'reviews/review', review: review, index: index, accordion_id: 'reviewsAccordion', banned: false
+              = render 'reviews/review', review: review, index: index,
+                                         accordion_id: 'reviewsAccordion', banned: false
 
             / Banned user reviews at the end (grayed out)
             - banned_reviews.each_with_index do |review, index|
-              = render 'reviews/review', review: review, index: (active_reviews.count + index), accordion_id: 'reviewsAccordion', banned: true
+              = render 'reviews/review', review: review, index: (active_reviews.count + index),
+                                         accordion_id: 'reviewsAccordion', banned: true
         - else
           .alert.alert-info.text-center
             em No reviews yet. Be the first to add one!
@@ -53,9 +55,8 @@
         h5.mb-0 Actions
       .card-body
         .d-grid.gap-2
-          = link_to "Edit Book", edit_book_path(@book), class: "btn btn-outline-primary"
-          = link_to "Back to Books", books_path, class: "btn btn-outline-secondary"
-          = button_to "Delete Book", @book, method: :delete,
-                      class: "btn btn-outline-danger",
-                      data: { confirm: "Are you sure you want to delete this book and all its reviews?" },
-                      form: { class: "d-grid" }
+          = link_to 'Edit Book', edit_book_path(@book), class: 'btn btn-outline-primary'
+          = link_to 'Back to Books', books_path, class: 'btn btn-outline-secondary'
+          = button_to 'Delete Book', @book, method: :delete, class: 'btn btn-outline-danger',
+                                            data: { confirm: 'Are you sure?' },
+                                            form: { class: 'd-grid' }

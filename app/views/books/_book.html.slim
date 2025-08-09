@@ -5,7 +5,7 @@ div id="#{dom_id book}"
     = book.author
   p
     strong Published at:
-    = book.published_at.strftime('%d/%m/%Y') if book.published_at
+    = book.published_at.strftime('%d/%m/%Y')
   p
     strong Rating:
     = book.displayed_rating

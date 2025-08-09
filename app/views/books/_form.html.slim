@@ -1,8 +1,8 @@
-= form_with(model: book, local: true, class: "needs-validation", novalidate: true) do |form|
+= form_with(model: book, local: true, class: 'needs-validation', novalidate: true) do |form|
   - if book.errors.any?
     .alert.alert-danger role="alert"
       h4.alert-heading Validation Errors
-      p = pluralize(book.errors.count, "error") + " prohibited this book from being saved:"
+      p | #{pluralize(book.errors.count, 'error')} prohibited this book from being saved:
       hr
       ul.mb-0
         - book.errors.each do |error|
@@ -11,8 +11,9 @@
   .row
     .col-md-6
       .mb-3
-        = form.label :title, class: "form-label"
-        = form.text_field :title, class: "form-control #{'is-invalid' if book.errors[:title].any?}", placeholder: "Enter book title", required: true
+        = form.label :title, class: 'form-label'
+        = form.text_field :title, class: "form-control #{'is-invalid' if book.errors[:title].any?}",
+                          placeholder: 'Enter book title', required: true
         - if book.errors[:title].any?
           .invalid-feedback
             = book.errors[:title].first
@@ -20,8 +21,10 @@
 
     .col-md-6
       .mb-3
-        = form.label :author, class: "form-label"
-        = form.text_field :author, class: "form-control #{'is-invalid' if book.errors[:author].any?}", placeholder: "Enter author name", required: true
+        = form.label :author, class: 'form-label'
+        = form.text_field :author,
+                          class: "form-control #{'is-invalid' if book.errors[:author].any?}",
+                          placeholder: 'Enter author name', required: true
         - if book.errors[:author].any?
           .invalid-feedback
             = book.errors[:author].first
@@ -30,13 +33,15 @@
   .row
     .col-md-6
       .mb-3
-        = form.label :published_at, "Publication Date", class: "form-label"
-        = form.date_field :published_at, class: "form-control #{'is-invalid' if book.errors[:published_at].any?}", required: true
+        = form.label :published_at, 'Publication Date', class: 'form-label'
+        = form.date_field :published_at,
+                          class: "form-control #{'is-invalid' if book.errors[:published_at].any?}",
+                          required: true
         - if book.errors[:published_at].any?
           .invalid-feedback
             = book.errors[:published_at].first
         .form-text When was this book first published?
 
   .d-flex.gap-2
-    = form.submit class: "btn btn-primary"
-    = link_to "Cancel", book.persisted? ? book : books_path, class: "btn btn-secondary"
+    = form.submit class: 'btn btn-primary'
+    = link_to 'Cancel', books_path, class: 'btn btn-secondary'

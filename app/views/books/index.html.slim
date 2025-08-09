@@ -1,8 +1,8 @@
-- content_for :title, "Books"
+- content_for :title, 'Books'
 
 .d-flex.justify-content-between.align-items-center.mb-4
   h1.mb-0 Books
-  = link_to "New Book", new_book_path, class: "btn btn-primary"
+  = link_to 'New Book', new_book_path, class: 'btn btn-primary'
 
 - if @books.any?
   .row
@@ -19,9 +19,9 @@
               strong Rating:
               span.badge.bg-secondary = book.displayed_rating
             .mt-auto
-              = link_to "View details", book, class: "btn btn-outline-primary btn-sm"
+              = link_to 'View details', book, class: 'btn btn-outline-primary btn-sm'
 - else
   .alert.alert-info.text-center
     h4 No registered books
     p Start adding your first book
-    = link_to "Add Book", new_book_path, class: "btn btn-primary"
+    = link_to 'Add Book', new_book_path, class: 'btn btn-primary'

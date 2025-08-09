@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Book, type: :model do
+RSpec.describe Book do
   describe 'associations' do
     it { is_expected.to have_many(:reviews).dependent(:destroy) }
   end

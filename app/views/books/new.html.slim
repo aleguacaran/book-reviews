@@ -1,4 +1,4 @@
-- content_for :title, "New Book"
+- content_for :title, 'New Book'
 
 .row.justify-content-center
   .col-lg-8
@@ -6,4 +6,4 @@
       .card-header.bg-primary.text-white
         h1.mb-0.fs-3 New Book
       .card-body
-        = render "form", book: @book
+        = render 'form', book: @book
