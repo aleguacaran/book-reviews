@@ -30,7 +30,8 @@ RSpec.describe UsersController, type: :controller do
     it 'renders all existing users' do
       create_list(:user, 3)
       get :index
-      expect(response.body).to include(*User.all.map(&:name))
+      names = User.all.map { |user| CGI.escapeHTML(user.name) }
+      expect(response.body).to include(*names)
     end
   end
 
