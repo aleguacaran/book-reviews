@@ -14,11 +14,13 @@ RSpec.describe ReviewsController do
     end
 
     it 'renders active users to select' do
-      expect(response.body).to include(*active_users)
+      escaped_names = active_users.map { |name| CGI.escapeHTML(name) }
+      expect(response.body).to include(*escaped_names)
     end
 
     it 'does not render banned users' do
-      expect(response.body).not_to include(*banned_users)
+      escaped_names = banned_users.map { |name| CGI.escapeHTML(name) }
+      expect(response.body).not_to include(*escaped_names)
     end
   end
 
