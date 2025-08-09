@@ -38,7 +38,7 @@ jobs:
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bin/importmap audit
 
-  lint:
+  lint_ruby:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -51,8 +51,19 @@ jobs:
           bundler-cache: true
 
       - name: Lint code for consistent style
-        continue-on-error: true
         run: bin/rubocop -f github
+
+  lint_slim:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
 
       - name: Lint Slim templates for consistent style
         run: bundle exec slim-lint -r github -c .slim-lint.yml app/views
