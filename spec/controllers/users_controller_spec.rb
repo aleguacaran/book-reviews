@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Specs for the UsersController
-RSpec.describe UsersController, type: :controller do
+RSpec.describe UsersController do
   shared_examples 'user not found' do
     it 'redirects to the users index' do
       expect(response).to redirect_to(users_path)

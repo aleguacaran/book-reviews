@@ -19,7 +19,7 @@ FactoryBot.define do
     end
 
     trait :from_banned_user do
-      association :user, factory: [:user, :banned]
+      user factory: %i[user banned]
     end
   end
 end

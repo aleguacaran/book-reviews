@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Review, type: :model do
+RSpec.describe Review do
   describe 'associations' do
     it { is_expected.to belong_to(:book) }
     it { is_expected.to belong_to(:user) }
@@ -9,9 +9,13 @@ RSpec.describe Review, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:rating) }
     it { is_expected.to validate_presence_of(:comment) }
-    it { is_expected.to validate_numericality_of(:rating)
-                    .is_greater_than_or_equal_to(1).is_less_than_or_equal_to(5)
-                    .with_message('must be between 1 and 5') }
+
+    it {
+      is_expected.to validate_numericality_of(:rating)
+        .is_greater_than_or_equal_to(1).is_less_than_or_equal_to(5)
+        .with_message('must be between 1 and 5')
+    }
+
     it { is_expected.to validate_length_of(:comment).is_at_most(1000) }
 
     it 'has a valid factory' do
@@ -37,14 +41,14 @@ RSpec.describe Review, type: :model do
 
   describe 'callbacks' do
     describe 'after_save' do
-      context 'on create' do
+      context 'when creating' do
         it 'changes the rating column of the book' do
           book = create(:book)
           expect { create_list(:review, 3, book: book, rating: 4) }.to change(book, :rating).from(nil).to(4.0)
         end
       end
 
-      context 'on update' do
+      context 'when updating' do
         it 'changes the rating column of the book' do
           book = create(:book)
           create_list(:review, 3, book: book, rating: 4)

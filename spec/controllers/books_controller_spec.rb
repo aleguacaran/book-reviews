@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Specs for the index action of books module
-RSpec.describe BooksController, type: :controller do
+RSpec.describe BooksController do
   shared_examples 'book not found' do
     it 'redirects to the books index' do
       expect(response).to redirect_to(books_path)

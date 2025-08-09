@@ -16,8 +16,8 @@ class Review < ApplicationRecord
   scope :from_active_users, -> { joins(:user).where(users: { status: :active }) }
   scope :from_banned_users, -> { joins(:user).where(users: { status: :banned }) }
 
-  after_save :update_book_rating
   after_destroy :update_book_rating
+  after_save :update_book_rating
 
   private
 

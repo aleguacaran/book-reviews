@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ReviewsController, type: :controller do
+RSpec.describe ReviewsController do
   let(:book) { create(:book) }
 
   shared_examples 'renders users to select' do
@@ -14,11 +14,13 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     it 'renders active users to select' do
-      expect(response.body).to include(*active_users)
+      escaped_names = active_users.map { |name| CGI.escapeHTML(name) }
+      expect(response.body).to include(*escaped_names)
     end
 
     it 'does not render banned users' do
-      expect(response.body).not_to include(*banned_users)
+      escaped_names = banned_users.map { |name| CGI.escapeHTML(name) }
+      expect(response.body).not_to include(*escaped_names)
     end
   end
 
@@ -98,14 +100,15 @@ RSpec.describe ReviewsController, type: :controller do
       it { is_expected.to render_template(:edit) }
 
       it 'renders a form to edit the review' do
-        expect(response.body).to include('form', "Edit Review for #{book.title}", 'Submit Review')
+        expect(response.body).to include('form', CGI.escapeHTML("Edit Review for #{book.title}"),
+                                         'Submit Review')
       end
 
       it_behaves_like 'renders users to select'
     end
 
     context 'when the review does not exist' do
-      before { get :edit, params: { book_id: book.id, id: 99999 } }
+      before { get :edit, params: { book_id: book.id, id: 9999 } }
 
       it_behaves_like 'review not found'
     end
@@ -158,7 +161,10 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     context 'when the review does not exist' do
-      before { patch :update, params: { book_id: book.id, id: 99999, review: { rating: 5, comment: 'Updated comment' } } }
+      before do
+        data = { book_id: book.id, id: 9999, review: { rating: 5, comment: 'Updated comment' } }
+        patch :update, params: data
+      end
 
       it_behaves_like 'review not found'
     end
@@ -191,7 +197,7 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     context 'when the review does not exist' do
-      before { delete :destroy, params: { book_id: book.id, id: 99999 } }
+      before { delete :destroy, params: { book_id: book.id, id: 9999 } }
 
       it_behaves_like 'review not found'
     end

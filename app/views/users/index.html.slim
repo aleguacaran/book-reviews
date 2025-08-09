@@ -1,8 +1,8 @@
-- content_for :title, "Users"
+- content_for :title, 'Users'
 
 .d-flex.justify-content-between.align-items-center.mb-4
   h1.mb-0 Users
-  = link_to "New User", new_user_path, class: "btn btn-primary"
+  = link_to 'New User', new_user_path, class: 'btn btn-primary'
 
 - if @users.any?
   .table-responsive
@@ -22,7 +22,7 @@
             td
               span.badge.bg-success Active
             td
-              = link_to "Edit", edit_user_path(user), class: "btn btn-outline-secondary btn-sm"
+              = link_to 'Edit', edit_user_path(user), class: 'btn btn-outline-secondary btn-sm'
 
         - banned_users.each do |user|
           tr.text-muted style="opacity: 0.7;"
@@ -30,9 +30,9 @@
             td
               span.badge.bg-danger Banned
             td
-              = link_to "Edit", edit_user_path(user), class: "btn btn-outline-secondary btn-sm"
+              = link_to 'Edit', edit_user_path(user), class: 'btn btn-outline-secondary btn-sm'
 - else
   .alert.alert-info.text-center
     h4 No registered users
     p Start adding your first user
-    = link_to "Add User", new_user_path, class: "btn btn-primary"
+    = link_to 'Add User', new_user_path, class: 'btn btn-primary'
