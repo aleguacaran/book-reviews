@@ -1,25 +1,51 @@
-= form_with(model: [@book, @review], local: true) do |form|
+= form_with(model: [@book, @review], local: true, class: "needs-validation", novalidate: true) do |form|
   - if @review.errors.any?
-    #error_explanation style="color: red;"
-      h2 = pluralize(@review.errors.count, "error") + " prohibited this review from being saved:"
-      ul
+    .alert.alert-danger role="alert"
+      h4.alert-heading Validation Errors
+      p = pluralize(@review.errors.count, "error") + " prohibited this review from being saved:"
+      hr
+      ul.mb-0
         - @review.errors.each do |error|
           li = error.full_message
 
-  .field
-    = form.label :user_id, "User", style: "display: block"
-    = form.collection_select :user_id, @users, :id, :name, { prompt: "Select a user" }, { required: true }
+  .mb-3
+    = form.label :user_id, "Reviewer", class: "form-label"
+    = form.collection_select :user_id, @users, :id, :name,
+                             { prompt: "Select a reviewer" },
+                             { class: "form-select #{'is-invalid' if @review.errors[:user_id].any?}", required: true }
+    - if @review.errors[:user_id].any?
+      .invalid-feedback
+        = @review.errors[:user_id].first
+    .form-text Choose the user who is writing this review
 
-  .field
-    = form.label :rating, "Rating (1-5)", style: "display: block"
-    = form.number_field :rating, in: 1..5, step: 1, required: true
-    small Rate from 1 (very bad) to 5 (excellent)
+  .mb-3
+    = form.label :rating, "Rating", class: "form-label"
+    .star-rating data-controller="star-rating" data-star-rating-rating-value=(@review.rating || 0)
+      - 5.times do |i|
+        .star data-star-rating-target="star" data-value=(i + 1) data-action="click->star-rating#click mouseover->star-rating#hover mouseleave->star-rating#leave"
+          | ★
+    = form.hidden_field :rating, value: (@review.rating || 0), class: "rating-input", data: { star_rating_target: "input" }
+    - if @review.errors[:rating].any?
+      .invalid-feedback.d-block
+        = @review.errors[:rating].first
+    .form-text Click on the stars to set the rating (1-5)
 
-  .field
-    = form.label :comment, "Comment", style: "display: block"
-    = form.text_area :comment, rows: 5, maxlength: 1000, required: true
-    small Maximum 1000 characters
+  .mb-3 data-controller="character-counter" data-character-counter-max-value="1000"
+    = form.label :comment, "Review Comment", class: "form-label"
+    = form.text_area :comment,
+                     class: "form-control #{'is-invalid' if @review.errors[:comment].any?}",
+                     rows: 5,
+                     maxlength: 1000,
+                     placeholder: "Share your thoughts about this book...",
+                     required: true,
+                     data: { character_counter_target: "input", action: "input->character-counter#updateCounter" }
+    - if @review.errors[:comment].any?
+      .invalid-feedback
+        = @review.errors[:comment].first
+    .form-text.d-flex.justify-content-between
+      span Maximum 1000 characters
+      span data-character-counter-target="counter" 0/1000
 
-  .actions
-    = form.submit class: "btn btn-primary"
+  .d-flex.gap-2
+    = form.submit "Submit Review", class: "btn btn-primary"
     = link_to "Cancel", @book, class: "btn btn-secondary"
