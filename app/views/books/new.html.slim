@@ -1,10 +1,9 @@
-- content_for :title, "New book"
+- content_for :title, "New Book"
 
-h1 New book
-
-= render "form", book: @book
-
-br
-
-div
-  = link_to "Back to books", books_path
+.row.justify-content-center
+  .col-lg-8
+    .card
+      .card-header.bg-primary.text-white
+        h1.mb-0.fs-3 New Book
+      .card-body
+        = render "form", book: @book

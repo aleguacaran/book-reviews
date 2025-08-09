@@ -1,27 +1,42 @@
-= form_with(model: book) do |form|
+= form_with(model: book, local: true, class: "needs-validation", novalidate: true) do |form|
   - if book.errors.any?
-    div style="color: red"
-      h2 = pluralize(book.errors.count, "error") + " prohibited this book from being saved:"
-
-      ul
+    .alert.alert-danger role="alert"
+      h4.alert-heading Validation Errors
+      p = pluralize(book.errors.count, "error") + " prohibited this book from being saved:"
+      hr
+      ul.mb-0
         - book.errors.each do |error|
           li = error.full_message
 
-  div
-    = form.label :title
-    = form.text_field :title
+  .row
+    .col-md-6
+      .mb-3
+        = form.label :title, class: "form-label"
+        = form.text_field :title, class: "form-control #{'is-invalid' if book.errors[:title].any?}", placeholder: "Enter book title", required: true
+        - if book.errors[:title].any?
+          .invalid-feedback
+            = book.errors[:title].first
+        .form-text Enter the full title of the book
 
-  div
-    = form.label :author
-    = form.text_field :author
+    .col-md-6
+      .mb-3
+        = form.label :author, class: "form-label"
+        = form.text_field :author, class: "form-control #{'is-invalid' if book.errors[:author].any?}", placeholder: "Enter author name", required: true
+        - if book.errors[:author].any?
+          .invalid-feedback
+            = book.errors[:author].first
+        .form-text Enter the author's full name
 
-  div
-    = form.label :published_at
-    = form.date_field :published_at
+  .row
+    .col-md-6
+      .mb-3
+        = form.label :published_at, "Publication Date", class: "form-label"
+        = form.date_field :published_at, class: "form-control #{'is-invalid' if book.errors[:published_at].any?}", required: true
+        - if book.errors[:published_at].any?
+          .invalid-feedback
+            = book.errors[:published_at].first
+        .form-text When was this book first published?
 
-  div
-    = form.label :reviews
-    = form.collection_check_boxes :reviews, 1..5, :itself, :itself
-
-  div
-    = form.submit
+  .d-flex.gap-2
+    = form.submit class: "btn btn-primary"
+    = link_to "Cancel", book.persisted? ? book : books_path, class: "btn btn-secondary"

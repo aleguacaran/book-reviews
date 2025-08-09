@@ -1,12 +1,10 @@
-- content_for :title, "Editing book"
+- content_for :title, "Editing #{@book.title}"
 
-h1 Editing book
-
-= render "form", book: @book
-
-br
-
-div
-  = link_to "Show this book", @book
-  |  |
-  = link_to "Back to books", books_path
+.row.justify-content-center
+  .col-lg-8
+    .card
+      .card-header.bg-warning.text-dark
+        h1.mb-0.fs-3
+          | Editing #{@book.title}
+      .card-body
+        = render "form", book: @book

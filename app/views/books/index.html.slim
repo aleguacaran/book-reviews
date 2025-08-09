@@ -13,16 +13,13 @@
             h5.card-title = book.title
             h6.card-subtitle.mb-2.text-muted = book.author
             p.card-text
-              strong Año:
+              strong Year:
               = book.published_at&.year
             p.card-text
-              strong Calificación:
-              - if book.rating
-                span.badge.bg-success = book.rating
-              - else
-                span.badge.bg-secondary Sin calificación
+              strong Rating:
+              span.badge.bg-secondary = book.displayed_rating
             .mt-auto
-              = link_to "Ver detalles", book, class: "btn btn-outline-primary btn-sm"
+              = link_to "View details", book, class: "btn btn-outline-primary btn-sm"
 - else
   .alert.alert-info.text-center
     h4 No registered books

@@ -1,24 +1,61 @@
-p style="color: green" = notice
+- content_for :title, @book.title
 
-= render @book
+.row
+  .col-lg-8
+    / Book Details Card
+    .card.mb-4
+      .card-header.bg-primary.text-white
+        h2.mb-0 = @book.title
+      .card-body
+        .row
+          .col-md-6
+            p.mb-2
+              strong Author:
+              = @book.author
+            p.mb-2
+              strong Published:
+              = @book.published_at&.strftime('%B %Y')
+          .col-md-6
+            p.mb-2
+              strong Rating:
+              span.badge.bg-secondary.fs-6
+                = @book.displayed_rating
 
-.reviews-section
-  h3 = "Reviews (#{@book.reviews.count})"
+    / Reviews Section
+    .card
+      .card-header.d-flex.justify-content-between.align-items-center
+        h4.mb-0
+          | Reviews (#{@book.reviews.count})
+        = link_to "Add Review", new_book_review_path(@book), class: "btn btn-primary btn-sm"
 
-  - if @book.reviews.any?
-    .reviews-list
-      - @book.reviews.includes(:user).each do |review|
-        = render 'reviews/review', review: review
-  - else
-    p
-      em No hay reviews aún. ¡Sé el primero en agregar una!
+      .card-body
+        - if @book.reviews.any?
+          / Separate active and banned user reviews
+          - active_reviews = @book.reviews.includes(:user).joins(:user).where(users: { status: :active })
+          - banned_reviews = @book.reviews.includes(:user).joins(:user).where(users: { status: :banned })
 
-  .add-review
-    = link_to "Agregar Review", new_book_review_path(@book), class: "btn btn-primary"
+          .accordion id="reviewsAccordion"
+            / Active user reviews first
+            - active_reviews.each_with_index do |review, index|
+              = render 'reviews/review', review: review, index: index, accordion_id: 'reviewsAccordion', banned: false
 
-.book-actions
-  = link_to "Edit this book", edit_book_path(@book)
-  |  |
-  = link_to "Back to books", books_path
+            / Banned user reviews at the end (grayed out)
+            - banned_reviews.each_with_index do |review, index|
+              = render 'reviews/review', review: review, index: (active_reviews.count + index), accordion_id: 'reviewsAccordion', banned: true
+        - else
+          .alert.alert-info.text-center
+            em No reviews yet. Be the first to add one!
 
-  = button_to "Destroy this book", @book, method: :delete
+  .col-lg-4
+    / Action buttons
+    .card
+      .card-header
+        h5.mb-0 Actions
+      .card-body
+        .d-grid.gap-2
+          = link_to "Edit Book", edit_book_path(@book), class: "btn btn-outline-primary"
+          = link_to "Back to Books", books_path, class: "btn btn-outline-secondary"
+          = button_to "Delete Book", @book, method: :delete,
+                      class: "btn btn-outline-danger",
+                      data: { confirm: "Are you sure you want to delete this book and all its reviews?" },
+                      form: { class: "d-grid" }

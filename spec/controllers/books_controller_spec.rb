@@ -47,7 +47,7 @@ RSpec.describe BooksController, type: :controller do
     end
 
     it 'renders a form to create a new book' do
-      expect(response.body).to include('form', 'New book', 'Create Book')
+      expect(response.body).to include('form', 'New Book', 'Create Book')
     end
   end
 
@@ -112,7 +112,8 @@ RSpec.describe BooksController, type: :controller do
       end
 
       it 'renders a form to edit the book' do
-        expect(response.body).to include('form', 'Editing book', 'Update Book')
+        expect(response.body).to include('form', CGI.escapeHTML("Editing #{book.title}"),
+                                         'Update Book')
       end
     end
 
@@ -186,7 +187,8 @@ RSpec.describe BooksController, type: :controller do
       end
 
       it 'renders the received book and it details' do
-        expect(response.body).to include(book.title, book.author, book.displayed_rating)
+        expect(response.body).to include(CGI.escapeHTML(book.title), CGI.escapeHTML(book.author),
+                                         book.displayed_rating)
       end
     end
 
