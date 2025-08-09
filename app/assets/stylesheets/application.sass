@@ -1,29 +1,25 @@
+@import "bootstrap/scss/bootstrap"
 @import "reviews"
 
-.flash
-  padding: 10px
-  margin-bottom: 10px
-  border-radius: 5px
-  background-color: #f0f0f0
-  border: 1px solid #ccc
-  color: #333
+.navbar-brand
+  font-weight: bold
 
-  &.success
-    background-color: #00ff00
-    border: 1px solid #ccc
-    color: #333
+.card
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1)
+  transition: box-shadow 0.2s ease-in-out
 
-  &.notice
-    background-color: #0000ff
-    border: 1px solid #ccc
-    color: #333
+  &:hover
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15)
 
-  &.alert
-    background-color: #ffff00
-    border: 1px solid #ccc
-    color: #333
+.table-responsive
+  border-radius: 8px
+  overflow: hidden
 
-  &.error
-    background-color: #ff0000
-    border: 1px solid #ccc
-    color: #333
+.btn
+  border-radius: 6px
+
+.badge
+  font-size: 0.85em
+
+tr.text-muted
+  background-color: #f8f9fa !important

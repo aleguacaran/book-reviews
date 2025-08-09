@@ -1,0 +1,10 @@
+- content_for :title, "Editing #{@book.title}"
+
+.row.justify-content-center
+  .col-lg-8
+    .card
+      .card-header.bg-warning.text-dark
+        h1.mb-0.fs-3
+          | Editing #{@book.title}
+      .card-body
+        = render "form", book: @book

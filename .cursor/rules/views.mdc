@@ -1,0 +1,12 @@
+---
+description: Rules for views
+globs: app/views/**/*.slim
+alwaysApply: false
+---
+## Rules
+- Use slim syntax for views
+- Use english language in views
+- Follow good practices based on slim-lint defaults
+- Use bootstrap 5.3 for styling and create components
+- When creating styles, use a file for each module like book.sass or table.sass in case of common components
+- For JS components, use a similiar behavior, using a file for a module like book.js or table.js in case of common components

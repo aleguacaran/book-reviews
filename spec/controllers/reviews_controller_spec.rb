@@ -35,7 +35,7 @@ RSpec.describe ReviewsController, type: :controller do
     it { is_expected.to render_template(:new) }
 
     it 'renders a form to create a new review' do
-      expect(response.body).to include('form', 'New review', 'Create Review', book.title)
+      expect(response.body).to include('form', "New Review for #{book.title}", 'Submit Review')
     end
 
     it_behaves_like 'renders users to select'
@@ -97,7 +97,7 @@ RSpec.describe ReviewsController, type: :controller do
       it { is_expected.to render_template(:edit) }
 
       it 'renders a form to edit the review' do
-        expect(response.body).to include('form', 'Edit review', 'Update Review', book.title)
+        expect(response.body).to include('form', "Edit Review for #{book.title}", 'Submit Review')
       end
 
       it_behaves_like 'renders users to select'

@@ -1,6 +1,10 @@
-h1 Edit review for "#{@book.title}"
-= render "form", book: @book, review: @review
-br
+- content_for :title, "Edit Review - #{@book.title}"
 
-div
-  = link_to "Back to book", @book
+.row.justify-content-center
+  .col-lg-8
+    .card
+      .card-header.bg-warning.text-dark
+        h1.mb-0.fs-3
+          | Edit Review for #{@book.title}
+      .card-body
+        = render "form", book: @book, review: @review

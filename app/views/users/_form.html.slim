@@ -1,18 +1,44 @@
-= form_with(model: user) do |form|
+= form_with(model: user, local: true, class: "needs-validation", novalidate: true) do |form|
   - if user.errors.any?
-    div style="color: red"
-      h2 = "#{pluralize(user.errors.count, "error")} prohibited this user from being saved:"
-      ul
+    .alert.alert-danger role="alert"
+      h4.alert-heading Validation Errors
+      p = "#{pluralize(user.errors.count, "error")} prohibited this user from being saved:"
+      hr
+      ul.mb-0
         - user.errors.each do |error|
           li = error.full_message
 
-  div
-    = form.label :name, style: "display: block"
-    = form.text_field :name
+  .row
+    .col-md-6
+      .mb-3
+        = form.label :name, "Full Name", class: "form-label"
+        = form.text_field :name,
+                         class: "form-control #{'is-invalid' if user.errors[:name].any?}",
+                         placeholder: "Enter user's full name", required: true
+        - if user.errors[:name].any?
+          .invalid-feedback
+            = user.errors[:name].first
+        .form-text Enter the complete name of the user
 
-  div
-    = form.label :status, style: "display: block"
-    = form.text_field :status
+    .col-md-6
+      .mb-3
+        = form.label :status, "User Status", class: "form-label"
+        .form-check
+          = form.radio_button :status, :active,
+                             class: "form-check-input #{'is-invalid' if user.errors[:status].any?}",
+                             id: "user_status_active"
+          = form.label :status, "Active", class: "form-check-label", for: "user_status_active"
+          .form-text.text-success User can write and edit reviews
+        .form-check
+          = form.radio_button :status, :banned,
+                             class: "form-check-input #{'is-invalid' if user.errors[:status].any?}",
+                             id: "user_status_banned"
+          = form.label :status, "Banned", class: "form-check-label", for: "user_status_banned"
+          .form-text.text-danger User cannot write new reviews
+        - if user.errors[:status].any?
+          .invalid-feedback.d-block
+            = user.errors[:status].first
 
-  div
-    = form.submit
+  .d-flex.gap-2
+    = form.submit class: "btn btn-primary"
+    = link_to "Cancel", users_path, class: "btn btn-secondary"

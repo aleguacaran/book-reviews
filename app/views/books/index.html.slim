@@ -1,0 +1,27 @@
+- content_for :title, "Books"
+
+.d-flex.justify-content-between.align-items-center.mb-4
+  h1.mb-0 Books
+  = link_to "New Book", new_book_path, class: "btn btn-primary"
+
+- if @books.any?
+  .row
+    - @books.each do |book|
+      .col-md-4.col-lg-3.mb-4
+        .card.h-100
+          .card-body.d-flex.flex-column
+            h5.card-title = book.title
+            h6.card-subtitle.mb-2.text-muted = book.author
+            p.card-text
+              strong Year:
+              = book.published_at&.year
+            p.card-text
+              strong Rating:
+              span.badge.bg-secondary = book.displayed_rating
+            .mt-auto
+              = link_to "View details", book, class: "btn btn-outline-primary btn-sm"
+- else
+  .alert.alert-info.text-center
+    h4 No registered books
+    p Start adding your first book
+    = link_to "Add Book", new_book_path, class: "btn btn-primary"

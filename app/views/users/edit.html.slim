@@ -1,10 +1,11 @@
-h1 Editing user
+- content_for :title, "Editing #{@user.name}"
 
-== render "form", user: @user
-
-br
-
-div
-  => link_to "Show this user", @user
-  '|
-  =< link_to "Back to users", users_path
+.row.justify-content-center
+  .col-lg-8
+    .card
+      .card-header.bg-warning.text-dark
+        h1.mb-0.fs-3
+          | Editing:
+          em = @user.name
+      .card-body
+        = render "form", user: @user
