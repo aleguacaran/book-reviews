@@ -6,6 +6,7 @@ globs: spec/**/*.rb
 # Docs
 - Use documentation for RSpec 3.13
 - Use documentation for FactoryBot 6.5
+- Use documentation for Shoulda Matchers 6.5
 
 # Config
 - Factories goes in spec/factories

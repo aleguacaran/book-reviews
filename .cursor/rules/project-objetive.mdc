@@ -1,6 +1,7 @@
 ---
-alwaysApply: true
-description: Sistema de calificación de Reseñas de Libros.
+alwaysApply: false
+description: Book review rating system.
+globs: *.rb
 ---
 
 Using Test-Driven Development (TDD), implement a book review rating system with the following requirements:

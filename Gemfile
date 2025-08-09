@@ -52,9 +52,6 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  # RSpec testing framework [https://github.com/rspec/rspec-rails]
-  gem "rspec-rails"
-
   # Factory for building test objects [https://github.com/thoughtbot/factory_bot_rails]
   gem "factory_bot_rails"
 
@@ -74,4 +71,9 @@ group :test do
 
   # Clean database state between tests [https://github.com/DatabaseCleaner/database_cleaner]
   gem "database_cleaner-active_record"
+
+  # RSpec testing framework [https://github.com/rspec/rspec-rails]
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
+  gem 'shoulda-matchers'
 end
